@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="note">My very important note text containing very important information</string>
+    <string name="note_title">Some important note</string>
 </resources>

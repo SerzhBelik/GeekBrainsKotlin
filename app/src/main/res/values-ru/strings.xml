@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="note">Моя очень важная заметка, содержащая очень важную информацию</string>
+    <string name="note_title">Некоторая важная заметка</string>
+</resources>
