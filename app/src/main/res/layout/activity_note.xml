@@ -25,29 +25,32 @@
 
 
     <LinearLayout
-        android:layout_height="match_parent"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:padding="16dp"
-        android:orientation="vertical">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@null"
+            android:hint="Заголовок заметки" />
 
         <EditText
-            android:layout_height="wrap_content"
+            android:id="@+id/et_body"
             android:layout_width="match_parent"
-            android:id="@+id/et_title"
-            android:hint="Текст заметки"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:background="@null"
-            android:layout_marginTop="16dp"/>
+            android:hint="Текст заметки" />
 
-    <EditText
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/et_body"
-        android:hint="Текст заметки"
-        android:background="@null"
-        android:layout_marginTop="16dp"/>
+    </LinearLayout>
 
-</LinearLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
