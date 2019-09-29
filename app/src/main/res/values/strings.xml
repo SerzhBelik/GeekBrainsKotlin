@@ -3,4 +3,5 @@
     <string name="note">My very important note text containing very important information</string>
     <string name="note_title">Some important note</string>
     <string name="new_note_title">New note</string>
+    <string name="menu_logout">Exit</string>
 </resources>

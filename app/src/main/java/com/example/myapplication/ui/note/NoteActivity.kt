@@ -70,6 +70,9 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
     }
 
     private fun initView() {
+        et_title.removeTextChangedListener(textChangeListener)
+        et_body.removeTextChangedListener(textChangeListener)
+
         if (note != null) {
             et_title.setText(note!!.title)
             et_body.setText(note!!.text)
