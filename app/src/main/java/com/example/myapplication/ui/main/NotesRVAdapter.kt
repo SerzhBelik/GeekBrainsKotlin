@@ -12,8 +12,9 @@ import com.example.myapplication.data.entity.Note
 import kotlinx.android.synthetic.main.item_note.view.*
 
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.common.getColorInt
 
-class NotesRVAdapter(val onItemClick: ((Note) -> Unit)? = null) : RecyclerView.Adapter<NotesRVAdapter.ViewHolder>() {
+class NotesRVAdapter(val onItemClick: ((Note)-> Unit)? = null) : RecyclerView.Adapter<NotesRVAdapter.ViewHolder>() {
 
     var notes: List<Note> = listOf()
         set(value) {
@@ -22,37 +23,24 @@ class NotesRVAdapter(val onItemClick: ((Note) -> Unit)? = null) : RecyclerView.A
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-        LayoutInflater.from(parent.context).inflate(
-            R.layout.item_note,
-            parent,
-            false
-        )
+            LayoutInflater.from(parent.context).inflate(
+                    R.layout.item_note,
+                    parent,
+                    false
+            )
     )
 
     override fun getItemCount() = notes.size
 
     override fun onBindViewHolder(vh: ViewHolder, pos: Int) = vh.bind(notes[pos])
 
-
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        fun bind(note: Note) = with(itemView) {
+            tv_title.text = note.title
+            tv_text.text = note.text
 
-
-        fun bind(note: Note) = with(note) {
-            itemView.tv_title.text = title
-            itemView.tv_text.text = text
-
-            val color = when(note.color){
-                Note.Color.WHITE -> R.color.white
-                Note.Color.YELLOW -> R.color.yellow
-                Note.Color.GREEN -> R.color.green
-                Note.Color.BLUE -> R.color.blue
-                Note.Color.RED -> R.color.red
-                Note.Color.VIOLET -> R.color.violet
-                Note.Color.PINK -> R.color.pink
-            }
-
-            itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, color))
+            itemView.setBackgroundColor(note.color.getColorInt(context))
             itemView.setOnClickListener {
                 onItemClick?.invoke(note)
             }

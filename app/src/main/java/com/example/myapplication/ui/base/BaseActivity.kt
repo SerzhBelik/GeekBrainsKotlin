@@ -14,11 +14,13 @@ import com.firebase.ui.auth.AuthUI
 import com.github.ajalt.timberkt.i
 import java.util.*
 
-abstract class BaseActivity<T, S: BaseViewState<T>> : AppCompatActivity(){
+abstract class BaseActivity<T, S : BaseViewState<T>> : AppCompatActivity() {
+
     companion object {
         private const val RC_SIGN_IN = 42424
     }
-    abstract val viewModel: BaseViewModel<T, S>
+
+    abstract val model: BaseViewModel<T, S>
     abstract val layoutRes: Int?
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,34 +28,30 @@ abstract class BaseActivity<T, S: BaseViewState<T>> : AppCompatActivity(){
         layoutRes?.let {
             setContentView(it)
         }
-
-        viewModel.getViewState().observe(this, Observer<S> {
+        model.getViewState().observe(this, Observer<S> {
             if (it == null) return@Observer
-            if (it.error != null){
-                renderError(it.error!!)
+            if (it.error != null) {
+                renderError(it.error)
                 return@Observer
             }
-
             renderData(it.data)
         })
     }
 
     abstract fun renderData(data: T)
 
-    protected fun renderError(error: Throwable){
-        when(error){
+    protected fun renderError(error: Throwable) {
+        when (error) {
             is NoAuthException -> startLogin()
-            else ->  error.message?.let { showError(it) }
+            else -> error.message?.let { showError(it) }
         }
     }
-    protected fun showError(message:String){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
 
-    private fun startLogin(){
+    private fun startLogin() {
         val providers = listOf(
                 AuthUI.IdpConfig.GoogleBuilder().build()
         )
+
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
@@ -69,7 +67,9 @@ abstract class BaseActivity<T, S: BaseViewState<T>> : AppCompatActivity(){
         if(requestCode == RC_SIGN_IN && resultCode != Activity.RESULT_OK){
             finish()
         }
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
+    protected fun showError(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 }

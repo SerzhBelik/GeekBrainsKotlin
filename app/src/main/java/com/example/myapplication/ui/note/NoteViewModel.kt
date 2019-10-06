@@ -6,34 +6,32 @@ import com.example.myapplication.data.entity.Note
 import com.example.myapplication.data.model.NoteResult
 import com.example.myapplication.ui.base.BaseViewModel
 
-class NoteViewModel : BaseViewModel<Note?, NoteViewState>() {
-    private var pendingNote: Note? = null
+class NoteViewModel(private val notesRepository: NotesRepository) : BaseViewModel<Note?, NoteViewState>() {
 
     init {
         viewStateLiveData.value = NoteViewState()
     }
 
-    fun save(note : Note){
+    private var pendingNote: Note? = null
+
+    fun save(note: Note) {
         pendingNote = note
     }
 
     override fun onCleared() {
-        if (pendingNote != null){
-            NotesRepository.saveNote(pendingNote!!)
+        if (pendingNote != null) {
+            notesRepository.saveNote(pendingNote!!)
         }
     }
 
-    fun loadNote(noteId: String){
-        NotesRepository.getNoteById(noteId).observeForever(Observer<NoteResult>{
+    fun loadNote(noteId: String) {
+        notesRepository.getNoteById(noteId).observeForever(Observer<NoteResult> {
             if (it == null) return@Observer
 
-            when(it){
-                is NoteResult.Success<*> ->
-                    viewStateLiveData.value = NoteViewState(note = it.data as Note)
-                is NoteResult.Error ->
-                    viewStateLiveData.value = NoteViewState(error = it.error)
-
+            when (it) {
+                is NoteResult.Success<*> -> viewStateLiveData.value = NoteViewState(note = it.data as? Note)
+                is NoteResult.Error -> viewStateLiveData.value = NoteViewState(error = it.error)
             }
         })
-}
+    }
 }
