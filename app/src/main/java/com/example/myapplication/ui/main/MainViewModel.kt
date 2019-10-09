@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.main
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.example.myapplication.data.NotesRepository
@@ -30,7 +31,8 @@ class MainViewModel(private val notesRepository: NotesRepository) : BaseViewMode
     }
 
 
-    override fun onCleared() {
+    @VisibleForTesting
+    public override fun onCleared() {
         repositoryNotes.removeObserver(notesObserver)
     }
 

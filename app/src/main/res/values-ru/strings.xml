@@ -22,4 +22,10 @@
 
     <string name="logout_dialog_negative">Нет</string>
 
+    <string name="note_delete_message">Удалить?</string>
+
+    <string name="note_delete_ok">Да</string>
+
+    <string name="note_delete_cancel">Нет</string>
+
 </resources>

@@ -17,13 +17,14 @@ import com.example.myapplication.data.entity.Note
 import com.example.myapplication.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.activity_note.*
+import org.jetbrains.anko.alert
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
 
 
-class NoteActivity : BaseActivity<Note?, NoteViewState>() {
+class NoteActivity : BaseActivity<NoteViewState.Data, NoteViewState>() {
 
     companion object {
         private val EXTRA_NOTE = NoteActivity::class.java.name + "extra.NOTE"
@@ -67,8 +68,9 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
     }
 
     @ExperimentalContracts
-    override fun renderData(data: Note?) {
-        this.note = data
+    override fun renderData(data: NoteViewState.Data) {
+        if (data.isDeleted) finish()
+        this.note = data.note
         supportActionBar?.title = note?.let { note ->
             note.lastChanged.format(DATE_TIME_FORMAT)
         } ?: getString(R.string.new_note_title)
@@ -134,6 +136,11 @@ class NoteActivity : BaseActivity<Note?, NoteViewState>() {
     }
 
     private fun deleteNote() {
-
+        alert {
+            messageResource = R.string.note_delete_message
+            negativeButton(R.string.note_delete_cancel) { dialog -> dialog.dismiss() }
+            positiveButton(R.string.note_delete_ok) { model.deleteNote() }
+        }.show()
     }
 }
+

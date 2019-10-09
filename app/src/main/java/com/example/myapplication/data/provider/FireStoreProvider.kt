@@ -78,7 +78,12 @@ class FireStoreProvider(private val firebaseAuth: FirebaseAuth, private val stor
         }
     }
 
-    override fun deleteNote(noteId: String): LiveData<NoteResult> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun deleteNote(noteId: String) = MutableLiveData<NoteResult>().apply {
+        getUserNotesCollection().document(noteId).delete()
+                .addOnSuccessListener {
+                    value = NoteResult.Success(null)
+                }.addOnFailureListener {
+                    value = NoteResult.Error(it)
+                }
     }
 }
