@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+    <resources>
+
+    <string name="app_name">gb_kotlin</string>
+
+    <string name="new_note_title">Новая заметка</string>
+
+    <string name="main_title">Заметки</string>
+
+    <string name="menu_logout">Выход</string>
+
+    <string name="note_change_color">Цвет</string>
+
+    <string name="note_delete">Удалить</string>
+
+    <string name="logout_dialog_title">Выход</string>
+
+    <string name="logout_dialog_message">Вы уверены?</string>
+
+    <string name="logout_dialog_positive">Да</string>
+
+    <string name="logout_dialog_negative">Нет</string>
+
+    <string name="note_delete_message">Удалить?</string>
+
+    <string name="note_delete_ok">Да</string>
+
+    <string name="note_delete_cancel">Нет</string>
+
+</resources>
